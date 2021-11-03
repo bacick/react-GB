@@ -1,19 +1,31 @@
+import { useState, useCallback, useEffect } from 'react';
 import './App.css';
-import { Message } from './components/Message'
+import { MessageForm } from './components/MessageForm'
+import { MessageList } from './components/MessageList';
+import { AUTHORS } from  './utils/contacts'
 
-const text = "I'm nut !!!";
-const handleClick = () => {
-  alert("You cool!")
-}
+const messageInit = [
+  {
+    text: 'text1',
+    author: AUTHORS.user
+  },
+];
 
-function App(props) {
+function App() {
+  const [messages, setMessages] = useState(messageInit);
+
+  const handleSendMessage = useCallback((newMessage) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  }, []);
+
+  useEffect(() => {
+    console.log(messages)
+  }, [messages])
+
   return (
     <div className="App">
-      <header className="App-header">
-        My First React App
-        <h3>Hello, {props.name}</h3>
-        <Message message={text} onClick={ handleClick }/>
-      </header>
+      <MessageList messages={ messages }/>
+      <MessageForm onSendMessage={handleSendMessage}/>
     </div>
   );
 }
