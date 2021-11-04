@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { AUTHORS } from '../utils/contacts';
 import { v4 as uuidv4 } from 'uuid';
+import Box from '@mui/material/Box';
+import Button from "@mui/material/Button";
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+
 
 export const MessageForm = ({onSendMessage}) => {
     const [value, setValue] = useState('');
@@ -23,11 +28,17 @@ export const MessageForm = ({onSendMessage}) => {
     }
     
     return (
-        <div>            
-            <form onSubmit={ handleSubmit }>
-                <input type="text" value={value} onChange={handleChange}/>
-                <input type="submit" />
-            </form>
+        <div>
+            <Box component="form"
+                sx={{ '& > :not(style)': { m: 1 }, }}
+                
+                onSubmit={handleSubmit}>
+                <FormControl sx={{ width: '40ch'}}>
+                    <OutlinedInput sx={{ mb: '5px'}}placeholder="Please enter text" value={value} onChange={handleChange}/>
+                    <Button variant="contained" color="primary" type="submit">Send </Button>
+                </FormControl>
+            </Box > 
         </div>
+        
     )
 }
