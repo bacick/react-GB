@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AUTHORS } from '../utils/contacts';
+import { AUTHORS } from '../utils/constants';
 import { v4 as uuidv4 } from 'uuid';
 import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";

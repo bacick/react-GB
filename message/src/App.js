@@ -2,18 +2,36 @@ import { useState, useCallback, useEffect } from 'react';
 import './App.css';
 import { MessageForm } from './components/MessageForm'
 import { MessageList } from './components/MessageList';
-import { AUTHORS } from './utils/contacts';
+import { MessageChats } from './components/MessageChats';
+import { AUTHORS } from './utils/constants';
 import { v4 as uuidv4 } from 'uuid';
+
 
 const messageInit = [
   {
     text: 'Pinky, are you pondering what I\'m pondering?',
     author: AUTHORS.user,
-    id: uuidv4()
+    id: uuidv4(),
+  },
+];
+
+const chatsInit = [
+  {
+    nameChat: "Pinky",
+    id: uuidv4(),
+  },
+  {
+    nameChat: "Rick",
+    id: uuidv4(),
+  },
+  {
+    nameChat: "Morty",
+    id: uuidv4(),
   },
 ];
 
 function App() {
+  const [chats, setChats] = useState(chatsInit)
   const [messages, setMessages] = useState(messageInit);
 
   const handleSendMessage = useCallback((newMessage) => {
@@ -36,8 +54,16 @@ function App() {
 
   return (
     <div className="App">
-      <MessageList messages={ messages }/>
-      <MessageForm onSendMessage={handleSendMessage}/>
+      <div className="App-container">
+        <div className="App-chats">
+          <MessageChats chats={chats}/>
+        </div>
+        <div className="App-message">
+          <MessageList messages={ messages }/>
+          <MessageForm onSendMessage={handleSendMessage} />
+        </div>
+        
+      </div>
     </div>
   );
 }
