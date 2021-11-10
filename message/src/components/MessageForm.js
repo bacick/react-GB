@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { AUTHORS } from '../utils/constants';
 import { v4 as uuidv4 } from 'uuid';
 import Box from '@mui/material/Box';
@@ -9,7 +9,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 
 export const MessageForm = ({onSendMessage}) => {
     const [value, setValue] = useState('');
-
+    const inputRef = useRef()
+    
     const handleChange = (event) => {
         // console.log(event)
         setValue(event.target.value);
@@ -24,6 +25,7 @@ export const MessageForm = ({onSendMessage}) => {
             id: uuidv4()
         })
         console.log(value)
+        inputRef.current?.focus();
         setValue('');
     }
     
@@ -34,7 +36,13 @@ export const MessageForm = ({onSendMessage}) => {
                 
                 onSubmit={handleSubmit}>
                 <FormControl sx={{ width: '40ch'}}>
-                    <OutlinedInput sx={{ mb: '5px'}}placeholder="Please enter text" value={value} onChange={handleChange}/>
+                    <OutlinedInput
+                        sx={{ mb: '5px' }}
+                        placeholder="Please enter text"
+                        autoFocus
+                        value={value}
+                        onChange={handleChange}
+                        inputRef={inputRef}/>
                     <Button variant="contained" color="primary" type="submit">Send </Button>
                 </FormControl>
             </Box > 
