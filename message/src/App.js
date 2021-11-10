@@ -1,71 +1,26 @@
-import { useState, useCallback, useEffect } from 'react';
-import './App.css';
-import { MessageForm } from './components/MessageForm'
-import { MessageList } from './components/MessageList';
-import { MessageChats } from './components/MessageChats';
-import { AUTHORS } from './utils/constants';
-import { v4 as uuidv4 } from 'uuid';
+import React from "react";
+import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+import Chat from "./components/Chat";
+import { MessageChats } from "./components/MessageChats";
 
+export const App = () => (
+    <BrowserRouter>
+        <ul>
+            <li>
+                <Link to="/">Home</Link>
+            </li>
+            <li>
+                <Link to="/chats">Chats</Link>
+            </li>
+        </ul>
 
-const messageInit = [
-  {
-    text: 'Pinky, are you pondering what I\'m pondering?',
-    author: AUTHORS.user,
-    id: uuidv4(),
-  },
-];
-
-const chatsInit = [
-  {
-    nameChat: "Pinky",
-    id: uuidv4(),
-  },
-  {
-    nameChat: "Rick",
-    id: uuidv4(),
-  },
-  {
-    nameChat: "Morty",
-    id: uuidv4(),
-  },
-];
-
-function App() {
-  const [chats, setChats] = useState(chatsInit)
-  const [messages, setMessages] = useState(messageInit);
-
-  const handleSendMessage = useCallback((newMessage) => {
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-  }, []);
-
-  useEffect(() => {
-    if (messages.length && messages[messages.length - 1].author !== AUTHORS.bot) {
-      const timeout = setTimeout(() => 
-        handleSendMessage({
-          text: 'I think so, Brain, but...',
-          author: AUTHORS.bot,
-          id: uuidv4()
-        }), 1000);
-      return () => clearTimeout(timeout);
-    }
-    // console.log(messages)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages])
-
-  return (
-    <div className="App">
-      <div className="App-container">
-        <div className="App-chats">
-          <MessageChats chats={chats}/>
-        </div>
-        <div className="App-message">
-          <MessageList messages={ messages }/>
-          <MessageForm onSendMessage={handleSendMessage} />
-        </div>
-        
-      </div>
-    </div>
-  );
-}
-
-export default App;
+        <Routes>
+            {/* <Route path="/" element={<Home />} /> */}
+            <Route path='chat'>
+                <Route index element={<MessageChats />} />
+                <Route path=":chatId" element={<Chat />}/>
+            </Route>
+            <Route path="*" element={<h3>404</h3>}/>
+        </Routes>
+    </BrowserRouter>
+)
