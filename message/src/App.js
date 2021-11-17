@@ -1,14 +1,17 @@
 import React from "react";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 import  Chat from "./components/Chat";
 import { MessageChats } from "./components/MessageChats";
 import { Profile } from "./components/Profile";
 import './App.css';
+import { store } from "./store";
 
 
 export const App = () => (   
 
-    <BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
         <ul>
             {/* <li>
                 <Link to="/">Home</Link>
@@ -34,5 +37,6 @@ export const App = () => (
             </Route> */}
             <Route path="*" element={<h3>404</h3>}/>
         </Routes>
-    </BrowserRouter>
+        </BrowserRouter>
+    </Provider>
 )
