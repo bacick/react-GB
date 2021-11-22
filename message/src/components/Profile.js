@@ -21,7 +21,10 @@ export const Profile = () => {
         <div>
             <h3>Profile</h3>
             <input type="checkbox" checked={checkboxValue} onChange={handleChange} />
-            {checkboxValue? (<span>{ name }</span> ) : null}
+            <form onSubmit={handleSubmit}>
+                <input type="text" value={value} onChange={handleChangeText} />
+                <input type="submit" />
+            </form>
         </div>
     );
 };
