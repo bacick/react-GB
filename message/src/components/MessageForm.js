@@ -5,11 +5,21 @@ import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { useParams } from 'react-router';
+import { useDispatch } from "react-redux";
+import { addMessages } from "../store/messages/actions";
 
-
-export const MessageForm = ({onSendMessage}) => {
+export const MessageForm = () => {
+    const {idChat} = useParams();
     const [value, setValue] = useState('');
     const inputRef = useRef()
+    const dispatch = useDispatch();
+    const handleSendMessage = React.useCallback((newMessages) => {
+        console.log(newMessages);
+        console.log(idChat);
+        // setMessages((prevMessages) => ({ ...prevMessages, [idChat]: [...prevMessages[idChat], newMessage], }));
+        dispatch(addMessages(newMessages, idChat))
+    }, [idChat]);
     
     const handleChange = (event) => {
         // console.log(event)
@@ -19,7 +29,7 @@ export const MessageForm = ({onSendMessage}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onSendMessage({
+        handleSendMessage({
             text: value,
             author: AUTHORS.user,
             id: uuidv4()
@@ -29,11 +39,11 @@ export const MessageForm = ({onSendMessage}) => {
         setValue('');
     }
     
+
     return (
         <div>
             <Box component="form"
                 sx={{ '& > :not(style)': { m: 1 }, }}
-                
                 onSubmit={handleSubmit}>
                 <FormControl sx={{ width: '40ch'}}>
                     <OutlinedInput

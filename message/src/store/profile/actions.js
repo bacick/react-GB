@@ -5,7 +5,7 @@ export const toggleCheckbox = {
     type: TOGGLE_CHECKBOX
 };
 
-export const chageName = (name) => ({
+export const changeName = (name) => ({
     type: CHANGE_NAME,
-    payolad: name,
+    payload: name,
 });

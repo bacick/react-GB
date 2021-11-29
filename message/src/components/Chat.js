@@ -6,6 +6,8 @@ import { MessageChats } from './MessageChats';
 import { AUTHORS } from '../utils/constants';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router';
+import { useSelector, useDispatch } from "react-redux";
+import { addMessages } from '../store/messages/actions';
 
 
 const messageInit = {
@@ -29,45 +31,36 @@ const messageInit = {
       }],
   };
 
-// const chatsInit = [
-//   {
-//     nameChat: "Pinky",
-//     id: "Pinky",
-//   },
-//   {
-//     nameChat: "Rick",
-//     id: "Rick",
-//   },
-//   {
-//     nameChat: "Morty",
-//     id: "Morty",
-//   },
-// ];
+
 
 function Chat() {
   const {idChat} = useParams();
- 
+  const dispatch = useDispatch();
   // const [chats, setChats] = useState(chatsInit)
-  const [messages, setMessages] = useState(messageInit);
+  // const [messages, setMessages] = useState(messageInit);
 
-  const handleSendMessage = useCallback((newMessage) => {
-    setMessages((prevMessages) => ({ ...prevMessages, [idChat]: [...prevMessages[idChat], newMessage], }));
-  }, [idChat]);
-
+  // const handleSendMessage = useCallback((newMessage) => {
+  //   setMessages((prevMessages) => ({ ...prevMessages, [idChat]: [...prevMessages[idChat], newMessage], }));
+  // }, [idChat]);
+  const messages = useSelector((state) => state.messages[idChat])
+  console.log(messages)
   useEffect(() => {
-    if (messages[idChat].length && messages[idChat][messages[idChat].length - 1].author !== AUTHORS.bot) {
+    if (messages?.length &&
+      messages?.[messages?.length - 1].author !== AUTHORS.bot) {
       const timeout = setTimeout(() => 
-        handleSendMessage({
+        dispatch(addMessages({
           text: 'I think so, Brain, but...',
           author: AUTHORS.bot,
           id: uuidv4()
-        }), 1000);
+        }, idChat)), 1000);
       return () => clearTimeout(timeout);
     }
-    // console.log(messages)
+  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages])
 
+          //messages={ messages[idChat] }
+        // onSendMessage={handleSendMessage}
   return (
     <div className="App">
       <div className="App-container">
@@ -75,8 +68,8 @@ function Chat() {
           <MessageChats />
         </div>
         <div className="App-message">
-          <MessageList messages={ messages[idChat] }/>
-          <MessageForm onSendMessage={handleSendMessage} />
+          <MessageList />
+          <MessageForm  />
         </div>
         
       </div>

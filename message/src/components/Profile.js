@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { store } from "../store";
-import { toggleCheckbox } from "../store/profile/actions";
+import { changeName, toggleCheckbox } from "../store/profile/actions";
 
 
 export const Profile = () => {
@@ -10,11 +10,19 @@ export const Profile = () => {
 
     const checkboxValue = useSelector(state => state.checkbox);
     const name = useSelector(state => state.name)
+    const[value, setValue] = useState(name)
     const dispatch = useDispatch();
 
     const handleChange = () => {
         console.log("@@@@@@")
         dispatch(toggleCheckbox)
+    }
+    const handleChangeText = (event) => {
+        setValue(event.target.value);
+    }
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        dispatch(changeName(value));
     }
 
     return (
