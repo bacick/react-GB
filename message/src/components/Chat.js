@@ -43,10 +43,11 @@ function Chat() {
   //   setMessages((prevMessages) => ({ ...prevMessages, [idChat]: [...prevMessages[idChat], newMessage], }));
   // }, [idChat]);
   const messages = useSelector((state) => state.messages[idChat])
-  console.log(messages)
+
   useEffect(() => {
-    if (messages?.length &&
-      messages?.[messages?.length - 1].author !== AUTHORS.bot) {
+    console.log(messages)
+    if (messages?.length && 
+      messages?.[messages?.length - 1].author !== AUTHORS.bot ) {
       const timeout = setTimeout(() => 
         dispatch(addMessages({
           text: 'I think so, Brain, but...',

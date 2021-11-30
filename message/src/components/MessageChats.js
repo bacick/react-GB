@@ -11,11 +11,12 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import { addChat, deleteChat } from "../store/chats/actions";
+import { selectChats } from "../store/chats/selector"
 
 
 
 export const MessageChats = () => {
-  const chats = useSelector((state) => state.chats);
+  const chats = useSelector(selectChats);
   const dispatch = useDispatch();
 
   const [selectedIndex, setSelectedIndex] = useState(1);
