@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { useParams } from 'react-router';
 import { useDispatch } from "react-redux";
-import { addMessages } from "../store/messages/actions";
+import { addMessagesWithReply } from "../store/messages/actions";
 
 export const MessageForm = () => {
     const {idChat} = useParams();
@@ -17,8 +17,7 @@ export const MessageForm = () => {
     const handleSendMessage = React.useCallback((newMessages) => {
         console.log(newMessages);
         console.log(idChat);
-        // setMessages((prevMessages) => ({ ...prevMessages, [idChat]: [...prevMessages[idChat], newMessage], }));
-        dispatch(addMessages(newMessages, idChat))
+        dispatch(addMessagesWithReply(newMessages, idChat))
     }, [idChat]);
     
     const handleChange = (event) => {

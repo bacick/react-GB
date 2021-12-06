@@ -42,6 +42,9 @@
     ]
   },
   "devDependencies": {
+    "install": "^0.13.0",
+    "npm": "^8.2.0",
+    "redux-thunk": "^2.4.1",
     "uuid": "^8.3.2"
   }
 }

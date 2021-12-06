@@ -20,7 +20,6 @@ export const MessageChats = () => {
   const dispatch = useDispatch();
 
   const [selectedIndex, setSelectedIndex] = useState(1);
-    // const [chats, setChats] = React.useState(chatsInit)
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
@@ -30,10 +29,7 @@ export const MessageChats = () => {
       const newId = uuidv4();
       console.log(nameChat)
       dispatch(addChat({ nameChat, id: newId }));
-      // setMessages((prevMessages) => ({
-      //   ...prevMessages,
-      //   [newId]: [],
-      // }));
+      
     },
     [dispatch]
   );
